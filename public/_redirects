@@ -1,0 +1,2 @@
+# Redirect www to non-www
+https://www.topconsultancynepal.com/* https://topconsultancynepal.com/:splat 301

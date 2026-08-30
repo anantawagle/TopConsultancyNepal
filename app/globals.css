@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7faf9;
+  --foreground: #172c36;
+  --brand-primary: #102f3b;
+  --brand-secondary: #087f72;
+  --brand-accent: #d8862f;
+  --surface: #ffffff;
+  --muted: #eaf2f0;
+  --border: #d9e5e2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Brand Colors */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+  
+  /* Utilities */
+  --color-text-main: #172c36;
+  --color-text-muted: #50636b;
+  --color-surface: var(--surface);
+  --color-soft: var(--muted);
+  --color-line: var(--border);
+
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html { scroll-behavior: smooth; }
+
+::selection { background: #bce8df; color: #102f3b; }
+
+a, button, summary { touch-action: manipulation; }
+
+:focus-visible {
+  outline: 3px solid #d8862f;
+  outline-offset: 3px;
+}
+
+.page-shell { width: min(100% - 2rem, 80rem); margin-inline: auto; }
+.eyebrow { font-size: .75rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--brand-secondary); }
+.section-title { color: var(--brand-primary); font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.06; text-wrap: balance; }
+.card-lift { transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.card-lift:hover { transform: translateY(-4px); box-shadow: 0 22px 55px -32px rgba(16,47,59,.45); border-color: #a8cbc4; }
+
+/* Aceternity Style Grid Backgrounds */
+.bg-grid-small-black {
+  background-image: radial-gradient(#000 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-dot-black {
+  background-image: radial-gradient(#000 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

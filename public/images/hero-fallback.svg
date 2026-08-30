@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title description">
+  <title id="title">Students planning an international education journey</title>
+  <desc id="description">Abstract illustration of a university, a globe and a pathway</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1F3A"/>
+      <stop offset="1" stop-color="#0F766E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="75%" cy="20%" r="65%">
+      <stop offset="0" stop-color="#67E8F9" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#67E8F9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#background)"/>
+  <rect width="1200" height="900" fill="url(#glow)"/>
+  <g fill="none" stroke="#fff" stroke-opacity=".09">
+    <path d="M0 150h1200M0 300h1200M0 450h1200M0 600h1200M0 750h1200"/>
+    <path d="M150 0v900M300 0v900M450 0v900M600 0v900M750 0v900M900 0v900M1050 0v900"/>
+  </g>
+  <circle cx="870" cy="300" r="170" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+  <path d="M703 300h334M870 130c55 50 83 107 83 170s-28 120-83 170M870 130c-55 50-83 107-83 170s28 120 83 170" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3"/>
+  <path d="M728 210c82 38 202 38 284 0M728 390c82-38 202-38 284 0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+  <path d="M112 650c190-145 340-43 478-145 75-55 116-124 168-188" fill="none" stroke="#FBBF24" stroke-width="14" stroke-linecap="round" stroke-dasharray="1 30"/>
+  <g transform="translate(155 180)">
+    <path d="M40 160 255 50l215 110" fill="#fff" fill-opacity=".92"/>
+    <rect x="75" y="160" width="360" height="250" rx="8" fill="#fff" fill-opacity=".9"/>
+    <rect x="112" y="205" width="55" height="160" rx="5" fill="#0F766E"/>
+    <rect x="228" y="205" width="55" height="160" rx="5" fill="#0F766E"/>
+    <rect x="344" y="205" width="55" height="160" rx="5" fill="#0F766E"/>
+    <rect x="42" y="400" width="426" height="26" rx="13" fill="#FBBF24"/>
+  </g>
+  <g transform="translate(775 605)">
+    <circle cx="90" cy="55" r="45" fill="#FBBF24"/>
+    <path d="M20 220c4-72 25-112 70-112s66 40 70 112" fill="#fff" fill-opacity=".9"/>
+    <circle cx="250" cy="55" r="45" fill="#67E8F9"/>
+    <path d="M180 220c4-72 25-112 70-112s66 40 70 112" fill="#fff" fill-opacity=".78"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+import Link from 'next/link'
+import type { Guide } from '@/lib/content/guides'
+
+export function GuideIndex({ title, description, baseHref, guides }: { title: string; description: string; baseHref: string; guides: Guide[] }) {
+  return <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 md:py-16"><p className="mb-3 text-sm font-bold uppercase tracking-widest text-brand-secondary">Explore your options</p><h1 className="text-4xl font-extrabold text-brand-primary md:text-5xl">{title}</h1><p className="mb-12 mt-5 max-w-3xl text-lg leading-8 text-text-muted">{description}</p><div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">{guides.map((guide) => <Link key={guide.slug} href={`${baseHref}/${guide.slug}`} className="group flex min-h-64 flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-brand-secondary/40 hover:shadow-lg"><p className="text-sm font-bold uppercase tracking-wide text-brand-secondary">{guide.eyebrow}</p><h2 className="mt-3 text-2xl font-bold text-brand-primary">{guide.name}</h2><p className="mt-4 flex-1 leading-7 text-text-muted">{guide.summary}</p><span className="mt-6 font-semibold text-brand-secondary">Explore {guide.name} <span className="inline-block transition-transform group-hover:translate-x-1">→</span></span></Link>)}</div></main>
+}
