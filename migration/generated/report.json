@@ -1,0 +1,32 @@
+{
+  "generatedAt": "2026-08-31T06:28:13.751Z",
+  "source": "repository hardcoded content",
+  "counts": {
+    "siteSettings": 1,
+    "guides": 13,
+    "destinations": 5,
+    "tests": 4,
+    "locations": 4,
+    "consultancies": 8,
+    "homeHighlights": 3,
+    "total": 25
+  },
+  "assets": {
+    "remoteImagesQueuedForSanityImport": 3
+  },
+  "routesPreserved": [
+    "/study/australia",
+    "/study/canada",
+    "/study/uk",
+    "/study/usa",
+    "/study/new-zealand",
+    "/test-preparation/ielts",
+    "/test-preparation/pte",
+    "/test-preparation/toefl",
+    "/test-preparation/sat",
+    "/consultancies/kathmandu",
+    "/consultancies/pokhara",
+    "/consultancies/chitwan",
+    "/consultancies/butwal"
+  ]
+}

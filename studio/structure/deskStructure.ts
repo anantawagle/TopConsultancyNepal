@@ -14,7 +14,8 @@ export const deskStructure = (S: StructureBuilder) =>
       S.divider(),
       S.documentTypeListItem('consultancy').title('Consultancies'),
       S.documentTypeListItem('event').title('Events'),
+      S.documentTypeListItem('guide').title('Destination & Test Guides'),
       S.documentTypeListItem('post').title('Blog Posts'),
       S.divider(),
-      ...S.documentTypeListItems().filter(listItem => !['siteSettings', 'consultancy', 'event', 'post'].includes(listItem.getId() as string))
+      ...S.documentTypeListItems().filter(listItem => !['siteSettings', 'consultancy', 'event', 'guide', 'post'].includes(listItem.getId() as string))
     ])

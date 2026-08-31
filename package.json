@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "studio:dev": "sanity dev --config studio/sanity.config.ts",
+    "studio:build": "sanity build --config studio/sanity.config.ts",
+    "cms:prepare-import": "node migration/scripts/build-current-content-import.mjs"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

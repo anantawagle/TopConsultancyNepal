@@ -1,19 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { defineQuery } from 'next-sanity'
 import { ArrowUpRight, Clock3, Mail, MapPinned, Phone, ShieldCheck } from 'lucide-react'
 import { ContactForm } from '@/components/contact/ContactForm'
+import { getSiteSettings } from '@/lib/sanity/settings'
 
 export const metadata: Metadata = { title: 'Start Your Study Abroad Journey', description: 'Share your study goals, preferred destination and test-preparation needs with Top Consultancy Nepal.' }
-type Settings = { contactEmail?: string; contactPhone?: string }
-const contactQuery = defineQuery(/* groq */ `*[_type == "siteSettings" && _id == "siteSettings"][0]{contactEmail,contactPhone}`)
-
 export default async function ContactPage() {
-  let settings: Settings | null = null
-  if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-    const { client } = await import('@/lib/sanity/client')
-    settings = await client.fetch<Settings | null>(contactQuery).catch(() => null)
-  }
+  const settings = await getSiteSettings()
 
   return <main id="main-content" tabIndex={-1} className="flex-1 overflow-hidden bg-[#f7faf9]">
     <section className="relative overflow-hidden bg-brand-primary text-white">

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import type { SiteSettings } from '@/lib/sanity/settings'
 
 const links = [
   { href: '/consultancies', label: 'Consultancies' }, { href: '/study', label: 'Destinations' },
@@ -13,7 +14,7 @@ const links = [
   { href: '/blog', label: 'Blog' }, { href: '/scholarships', label: 'Scholarships' },
 ]
 
-export function Header() {
+export function Header({ settings }: { settings?: SiteSettings | null }) {
   const pathname = usePathname()
   const reduceMotion = useReducedMotion()
   const [visible, setVisible] = useState(true)
@@ -38,7 +39,7 @@ export function Header() {
     <div className="relative mx-auto max-w-7xl rounded-[1.4rem] border border-white/70 bg-white/85 shadow-[0_18px_60px_-20px_rgba(11,31,58,0.45)] backdrop-blur-2xl">
       <div className="absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/50 to-transparent" />
       <div className="flex h-[68px] items-center justify-between px-4 sm:px-5">
-        <Link href="/" className="group flex items-center gap-2.5" aria-label="Top Consultancy Nepal home"><span className="relative h-12 w-12 shrink-0 transition-transform group-hover:scale-105"><Image src="/images/tcn-logo.png" alt="" fill priority sizes="48px" className="object-contain" /></span><span className="leading-tight"><span className="block text-base font-extrabold tracking-tight text-brand-primary sm:text-lg">Top Consultancy</span><span className="hidden text-[10px] font-bold uppercase tracking-[0.2em] text-brand-secondary sm:block">Nepal</span></span></Link>
+        <Link href="/" className="group flex items-center gap-2.5" aria-label={`${settings?.siteName || 'Top Consultancy Nepal'} home`}><span className="relative h-12 w-12 shrink-0 transition-transform group-hover:scale-105"><Image src={settings?.logo?.url || "/images/tcn-logo.png"} alt="" fill priority sizes="48px" className="object-contain" /></span><span className="leading-tight"><span className="block text-base font-extrabold tracking-tight text-brand-primary sm:text-lg">{settings?.siteName || 'Top Consultancy Nepal'}</span>{settings?.tagline && <span className="hidden max-w-48 truncate text-[10px] font-bold uppercase tracking-[0.12em] text-brand-secondary sm:block">{settings.tagline}</span>}</span></Link>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary navigation">{links.map((link) => <Link key={link.href} href={link.href} className={`relative rounded-full px-3 py-2 text-sm font-semibold transition-colors ${isActive(link.href) ? 'bg-brand-primary text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-brand-primary'}`}>{link.label}</Link>)}</nav>
         <div className="flex items-center gap-2"><Link href="/contact" className="hidden items-center rounded-full bg-brand-secondary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-secondary/20 transition hover:-translate-y-0.5 hover:bg-brand-primary md:inline-flex">Contact <ArrowUpRight className="ml-1.5 h-4 w-4" /></Link><button type="button" onClick={() => setMenuOpen((open) => !open)} className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-brand-primary lg:hidden" aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>{menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button></div>
       </div>

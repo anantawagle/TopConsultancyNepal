@@ -1,4 +1,5 @@
 import { defineQuery } from 'next-sanity'
+import { isSanityConfigured } from './config'
 
 export type ConsultancyCard = {
   _id: string
@@ -81,7 +82,7 @@ export const consultancyQuery = defineQuery(/* groq */ `
 `)
 
 export async function getConsultancies(): Promise<ConsultancyCard[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return referenceConsultancies
+  if (!isSanityConfigured) return referenceConsultancies
   const { client } = await import('./client')
   const cmsItems = await client.fetch<ConsultancyCard[]>(consultanciesQuery).catch(() => [])
   const cmsSlugs = new Set(cmsItems.map(({ slug }) => slug))
@@ -92,7 +93,7 @@ export async function getConsultancies(): Promise<ConsultancyCard[]> {
 export async function getConsultancy(slug: string): Promise<Consultancy | null> {
   const resolvedSlug = consultancySlugAliases[slug] ?? slug
   const fallback = referenceConsultancies.find((item) => item.slug === resolvedSlug) ?? null
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return fallback
+  if (!isSanityConfigured) return fallback
   const { client } = await import('./client')
   return client.fetch<Consultancy | null>(consultancyQuery, { slug: resolvedSlug }).then((item) => item ?? fallback).catch(() => fallback)
 }

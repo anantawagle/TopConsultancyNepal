@@ -1,19 +1,21 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { SiteSettings } from '@/lib/sanity/settings'
 
-export function Footer() {
+export function Footer({ settings }: { settings?: SiteSettings | null }) {
   const currentYear = new Date().getFullYear()
+  const siteName = settings?.siteName || 'Top Consultancy Nepal'
 
   return (
     <footer className="mt-auto border-t border-white/10 bg-brand-primary px-6 py-16 text-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-4">
         <div className="md:col-span-1">
-          <Link href="/" className="mb-5 inline-flex items-center gap-3" aria-label="Top Consultancy Nepal home">
-            <span className="relative h-16 w-16 shrink-0 rounded-2xl bg-white p-1"><Image src="/images/tcn-logo.png" alt="" fill sizes="64px" className="object-contain p-1" /></span>
-            <span className="leading-tight"><span className="block text-xl font-extrabold tracking-tight text-white">Top Consultancy</span><span className="text-xs font-bold uppercase tracking-[0.18em] text-teal-300">Nepal</span></span>
+          <Link href="/" className="mb-5 inline-flex items-center gap-3" aria-label={`${siteName} home`}>
+            <span className="relative h-16 w-16 shrink-0 rounded-2xl bg-white p-1"><Image src={settings?.logo?.url || "/images/tcn-logo.png"} alt="" fill sizes="64px" className="object-contain p-1" /></span>
+            <span className="leading-tight"><span className="block text-xl font-extrabold tracking-tight text-white">{siteName}</span></span>
           </Link>
           <p className="mb-6 text-sm leading-relaxed text-slate-300">
-            Find, Compare and Choose with Confidence. Your trusted directory for education consultancies in Nepal.
+            {settings?.tagline || 'Find, Compare and Choose with Confidence. Your trusted directory for education consultancies in Nepal.'}
           </p>
         </div>
         
@@ -48,7 +50,7 @@ export function Footer() {
       </div>
       
       <div className="mx-auto mt-16 max-w-7xl border-t border-white/10 pt-8 text-center text-sm text-slate-400">
-        <p>&copy; {currentYear} Top Consultancy Nepal. All rights reserved.</p>
+        <p>&copy; {currentYear} {siteName}. All rights reserved.</p>
       </div>
     </footer>
   )

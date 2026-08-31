@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'post',
@@ -9,7 +9,7 @@ export default defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required().max(120),
     }),
     defineField({
       name: 'slug',
@@ -19,13 +19,14 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: { type: 'author' },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'mainImage',
@@ -35,11 +36,12 @@ export default defineType({
         hotspot: true,
       },
       fields: [
-        {
+        defineField({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
-        }
+          validation: (rule) => rule.max(120),
+        })
       ]
     }),
     defineField({
@@ -47,19 +49,21 @@ export default defineType({
       title: 'Published at',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',
       rows: 4,
+      validation: (rule) => rule.required().min(40).max(300),
     }),
     defineField({
       name: 'topics',
       title: 'Related page topics',
       description: 'Select the pages where this article should appear as a related guide.',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [defineArrayMember({ type: 'string' })],
       options: {
         list: [
           { title: 'Australia', value: 'country:australia' },
@@ -74,11 +78,13 @@ export default defineType({
         ],
         layout: 'grid',
       },
+      validation: (rule) => rule.unique(),
     }),
     defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

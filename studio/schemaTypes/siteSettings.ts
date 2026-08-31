@@ -21,6 +21,14 @@ export default defineType({
       title: 'Logo',
       type: 'image',
       options: { hotspot: true },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative text',
+          type: 'string',
+          validation: (rule) => rule.max(120),
+        }),
+      ],
     }),
     defineField({
       name: 'favicon',
@@ -31,16 +39,20 @@ export default defineType({
       name: 'defaultSeoTitle',
       title: 'Default SEO Title',
       type: 'string',
+      validation: (rule) => rule.max(60).warning('Keep titles under 60 characters'),
     }),
     defineField({
       name: 'defaultSeoDescription',
       title: 'Default SEO Description',
       type: 'text',
+      rows: 3,
+      validation: (rule) => rule.max(160).warning('Keep descriptions under 160 characters'),
     }),
     defineField({
       name: 'contactEmail',
       title: 'Contact Email',
       type: 'string',
+      validation: (rule) => rule.email(),
     }),
     defineField({
       name: 'contactPhone',

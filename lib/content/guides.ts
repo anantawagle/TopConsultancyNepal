@@ -6,6 +6,7 @@ export type Guide = {
   introduction: string
   highlights: { title: string; description: string }[]
   facts: { label: string; value: string }[]
+  seo?: { title?: string; description?: string }
 }
 
 export const countries: Guide[] = [

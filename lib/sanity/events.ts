@@ -1,5 +1,6 @@
 import { defineQuery } from 'next-sanity'
 import type { PortableTextBlock } from './consultancies'
+import { isSanityConfigured } from './config'
 
 export type EventCard = {
   _id: string
@@ -52,5 +53,5 @@ export const eventQuery = defineQuery(/* groq */ `
   }
 `)
 
-export async function getUpcomingEvents(): Promise<EventCard[]> { if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []; const { client } = await import('./client'); return client.fetch<EventCard[]>(upcomingEventsQuery).catch(() => []) }
-export async function getEvent(slug: string): Promise<Event | null> { if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return null; const { client } = await import('./client'); return client.fetch<Event | null>(eventQuery, { slug }).catch(() => null) }
+export async function getUpcomingEvents(): Promise<EventCard[]> { if (!isSanityConfigured) return []; const { client } = await import('./client'); return client.fetch<EventCard[]>(upcomingEventsQuery).catch(() => []) }
+export async function getEvent(slug: string): Promise<Event | null> { if (!isSanityConfigured) return null; const { client } = await import('./client'); return client.fetch<Event | null>(eventQuery, { slug }).catch(() => null) }

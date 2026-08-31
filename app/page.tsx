@@ -7,23 +7,24 @@ import { defineQuery } from 'next-sanity';
 import { getConsultancies } from '@/lib/sanity/consultancies';
 import type { ConsultancyCard } from '@/lib/sanity/consultancies';
 import type { Highlight } from '@/components/home/AnimatedHero';
+import { isSanityConfigured } from '@/lib/sanity/config';
 
 type HomePost = { _id: string; title: string; slug: string; excerpt?: string };
 
 const highlightsQuery = defineQuery(/* groq */ `*[
-  _type == "homeHighlight" && publishedAt <= now() &&
+  _type == "homeHighlight" && defined(publishedAt) && publishedAt <= now() &&
   (!defined(expiresAt) || expiresAt > now())
 ] | order(priority desc, publishedAt desc)[0...8] {
   _id, category, title, summary, link,
   mainImage { "url": asset->url, alt }
 }`);
-const latestPostsQuery = defineQuery(/* groq */ `*[_type == "post" && defined(slug.current)] | order(publishedAt desc, _id asc)[0...3]{ _id, title, "slug": slug.current, excerpt }`);
+const latestPostsQuery = defineQuery(/* groq */ `*[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc, _id asc)[0...3]{ _id, title, "slug": slug.current, excerpt }`);
 
 export default async function Home() {
   let highlights: Highlight[] = [];
   let consultancies: ConsultancyCard[] = [];
   let posts: HomePost[] = [];
-  if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+  if (isSanityConfigured) {
     const { client } = await import('@/lib/sanity/client');
     [highlights, consultancies, posts] = await Promise.all([
       client.fetch(highlightsQuery).catch(() => []),

@@ -1,24 +1,25 @@
 import Link from 'next/link'
 import { defineQuery } from 'next-sanity'
+import { isSanityConfigured } from '@/lib/sanity/config'
 
 type Post = { _id: string; title: string; slug: string; excerpt?: string; publishedAt?: string }
 
 const relatedPostsQuery = defineQuery(/* groq */ `
-  *[_type == "post" && defined(slug.current) && $topic in coalesce(topics, [])]
+  *[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now() && $topic in coalesce(topics, [])]
     | order(publishedAt desc, _id asc)[0...3] {
       _id, title, "slug": slug.current, excerpt, publishedAt
     }
 `)
 
 const recentPostsQuery = defineQuery(/* groq */ `
-  *[_type == "post" && defined(slug.current)]
+  *[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()]
     | order(publishedAt desc, _id asc)[0...3] {
       _id, title, "slug": slug.current, excerpt, publishedAt
     }
 `)
 
 async function getPosts(topic: string): Promise<Post[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return []
+  if (!isSanityConfigured) return []
   const { client } = await import('@/lib/sanity/client')
   const related = await client.fetch<Post[]>(relatedPostsQuery, { topic }).catch(() => [])
   return related.length ? related : client.fetch<Post[]>(recentPostsQuery).catch(() => [])

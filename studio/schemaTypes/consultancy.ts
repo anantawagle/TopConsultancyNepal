@@ -14,6 +14,7 @@ export default defineType({
     { name: 'contact', title: 'Contact & branches' },
     { name: 'trust', title: 'Trust & listing' },
     { name: 'seo', title: 'SEO' },
+    { name: 'migration', title: 'Migration' },
   ],
   fields: [
     defineField({ name: 'name', title: 'Consultancy name', type: 'string', group: 'profile', validation: (rule) => rule.required().max(100) }),
@@ -46,6 +47,7 @@ export default defineType({
     defineField({ name: 'sourceReviewedAt', title: 'Source reviewed on', type: 'date', group: 'trust' }),
 
     defineField({ name: 'seo', title: 'Search appearance', type: 'object', group: 'seo', fields: [defineField({ name: 'title', title: 'SEO title', type: 'string', validation: (rule) => rule.max(60).warning('Keep titles under 60 characters') }), defineField({ name: 'description', title: 'SEO description', type: 'text', rows: 3, validation: (rule) => rule.max(160).warning('Keep descriptions under 160 characters') })] }),
+    defineField({ name: 'sourceId', title: 'Migration source ID', type: 'string', group: 'migration', readOnly: true }),
   ],
   orderings: [{ title: 'Featured first', name: 'featuredFirst', by: [{ field: 'featuredRank', direction: 'asc' }, { field: 'name', direction: 'asc' }] }],
   preview: { select: { title: 'name', city: 'city', media: 'logo', verified: 'isVerified', status: 'listingStatus' }, prepare({ title, city, media, verified, status }) { return { title, media, subtitle: [city, verified ? 'Verified' : undefined, status === 'hidden' ? 'Hidden' : undefined].filter(Boolean).join(' · ') } } },

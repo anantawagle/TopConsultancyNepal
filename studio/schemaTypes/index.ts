@@ -5,5 +5,6 @@ import blockContent from './blockContent'
 import author from './author'
 import post from './post'
 import event from './event'
+import guide from './guide'
 
-export const schemaTypes = [siteSettings, consultancy, event, homeHighlight, blockContent, author, post]
+export const schemaTypes = [siteSettings, consultancy, event, guide, homeHighlight, blockContent, author, post]
