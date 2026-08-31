@@ -13,7 +13,7 @@ const fallbackByType: Record<GuideType, Guide[]> = {
 
 export const guidesQuery = defineQuery(/* groq */ `
   *[_type == "guide" && guideType == $guideType && defined(slug.current)]
-    | order(name asc) {
+    | order(_updatedAt desc, name asc) {
       name,
       "slug": slug.current,
       eyebrow,
@@ -26,7 +26,8 @@ export const guidesQuery = defineQuery(/* groq */ `
 `)
 
 export const guideQuery = defineQuery(/* groq */ `
-  *[_type == "guide" && guideType == $guideType && slug.current == $slug][0] {
+  *[_type == "guide" && guideType == $guideType && slug.current == $slug]
+    | order(_updatedAt desc)[0] {
     name,
     "slug": slug.current,
     eyebrow,

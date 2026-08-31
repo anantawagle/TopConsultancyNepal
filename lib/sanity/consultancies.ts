@@ -55,7 +55,7 @@ export const referenceConsultancySlugs = [
 
 export const consultanciesQuery = defineQuery(/* groq */ `
   *[_type == "consultancy" && defined(slug.current) && coalesce(listingStatus, "active") == "active"]
-    | order(isSponsored desc, featuredRank asc, name asc) {
+    | order(_updatedAt desc, isSponsored desc, featuredRank asc, name asc) {
       _id, name, "slug": slug.current, shortDescription, city,
       isVerified, isSponsored, destinations, testPreparation,
       "logo": logo.asset->{ "url": url, "alt": ^.alt }
@@ -69,7 +69,8 @@ export const consultancySlugsQuery = defineQuery(/* groq */ `
 `)
 
 export const consultancyQuery = defineQuery(/* groq */ `
-  *[_type == "consultancy" && slug.current == $slug && coalesce(listingStatus, "active") == "active"][0] {
+  *[_type == "consultancy" && slug.current == $slug && coalesce(listingStatus, "active") == "active"]
+    | order(_updatedAt desc)[0] {
     _id, name, "slug": slug.current, shortDescription, city,
     isVerified, isSponsored, establishedYear, details,
     services, destinations, testPreparation, accreditations,
