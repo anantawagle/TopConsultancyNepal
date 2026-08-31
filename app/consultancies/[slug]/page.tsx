@@ -6,7 +6,7 @@ import { SimplePortableText } from '@/components/content/SimplePortableText'
 import { consultancySlugsQuery, getConsultancy, referenceConsultancySlugs } from '@/lib/sanity/consultancies'
 import { isSanityConfigured } from '@/lib/sanity/config'
 
-export const dynamicParams = false
+export const dynamicParams = true
 export async function generateStaticParams() { if (!isSanityConfigured) return referenceConsultancySlugs; const { client } = await import('@/lib/sanity/client'); const cmsSlugs = await client.fetch<{ slug: string }[]>(consultancySlugsQuery).catch(() => []); return [...cmsSlugs, ...referenceConsultancySlugs.filter(({ slug }) => !cmsSlugs.some((item) => item.slug === slug))] }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const item = await getConsultancy((await params).slug); return item ? { title: item.seo?.title || item.name, description: item.seo?.description || item.shortDescription } : {} }
 

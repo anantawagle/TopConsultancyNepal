@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Run as a normal Next.js server so Sanity content can be revalidated
+  // without rebuilding the entire site.
   images: {
-    unoptimized: true, // Sanity will handle image optimization
+    unoptimized: true, // Keep compatibility with the existing hosting setup
   },
 };
 

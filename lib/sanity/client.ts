@@ -3,5 +3,5 @@ import { sanityConfig } from './config'
 
 export const client = createClient({
   ...sanityConfig,
-  useCdn: false, // We're generating a static site, so we fetch fresh at build time
+  useCdn: false, // Read the freshest published content for server rendering/ISR
 })

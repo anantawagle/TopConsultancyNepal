@@ -3,6 +3,10 @@ import { Inter } from "next/font/google";
 import { getSiteSettings } from "@/lib/sanity/settings";
 import "./globals.css";
 
+// Re-render CMS-backed pages at most once per minute. A Sanity webhook can
+// trigger on-demand revalidation later if immediate updates are required.
+export const revalidate = 60;
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],

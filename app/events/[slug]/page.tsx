@@ -6,7 +6,7 @@ import { SimplePortableText } from '@/components/content/SimplePortableText'
 import { eventSlugsQuery, getEvent } from '@/lib/sanity/events'
 import { isSanityConfigured } from '@/lib/sanity/config'
 
-export const dynamicParams = false
+export const dynamicParams = true
 const dateFormat = new Intl.DateTimeFormat('en', { dateStyle: 'full', timeStyle: 'short', timeZone: 'Asia/Kathmandu' })
 export async function generateStaticParams() { if (!isSanityConfigured) return [{ slug: '__empty' }]; const { client } = await import('@/lib/sanity/client'); const slugs = await client.fetch<{ slug: string }[]>(eventSlugsQuery).catch(() => []); return slugs.length ? slugs : [{ slug: '__empty' }] }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const event = await getEvent((await params).slug); return event ? { title: event.seo?.title || event.title, description: event.seo?.description || event.summary } : {} }
