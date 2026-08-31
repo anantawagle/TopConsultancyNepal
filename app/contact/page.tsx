@@ -13,7 +13,7 @@ export default async function ContactPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,.12)_1px,transparent_0)] bg-[size:28px_28px] [mask-image:linear-gradient(to_right,black,transparent)]" aria-hidden="true" />
       <div className="absolute -right-32 -top-40 h-96 w-96 rounded-full bg-brand-secondary/40 blur-[100px]" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-4 py-20 lg:py-28">
-        <p className="eyebrow !text-teal-300">Your study journey starts here</p>
+        <p className="eyebrow !text-teal-300">Your study journey starts here!</p>
         <h1 className="mt-4 max-w-3xl text-5xl font-extrabold leading-[1.04] tracking-[-.045em] md:text-7xl text-balance">Where do you want your education to take you?</h1>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-200">Share your destination, academic background and test-preparation needs. We’ll use the details to understand the guidance you’re looking for.</p>
         <div className="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-slate-200"><span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-teal-300" aria-hidden="true" />Your details stay private</span><span className="inline-flex items-center gap-2"><Clock3 className="h-4 w-4 text-teal-300" aria-hidden="true" />Typical review: 2–3 days</span></div>
