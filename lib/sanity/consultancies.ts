@@ -83,24 +83,21 @@ export const consultancyQuery = defineQuery(/* groq */ `
 `)
 
 export async function getConsultancies(): Promise<ConsultancyCard[]> {
-  if (!isSanityConfigured) return referenceConsultancies
+  if (!isSanityConfigured) return []
   const { client } = await import('./client')
   const cmsItems = await client.fetch<ConsultancyCard[]>(consultanciesQuery, {}, { cache: 'no-store' }).catch((error) => {
     console.error('[Sanity] Failed to load consultancies', error)
     return []
   })
-  const cmsSlugs = new Set(cmsItems.map(({ slug }) => slug))
-  return [...cmsItems, ...referenceConsultancies.filter(({ slug }) => !cmsSlugs.has(slug))]
-    .sort((a, b) => Number(b.slug === 'goreto-educational-consultancy') - Number(a.slug === 'goreto-educational-consultancy'))
+  return cmsItems
 }
 
 export async function getConsultancy(slug: string): Promise<Consultancy | null> {
   const resolvedSlug = consultancySlugAliases[slug] ?? slug
-  const fallback = referenceConsultancies.find((item) => item.slug === resolvedSlug) ?? null
-  if (!isSanityConfigured) return fallback
+  if (!isSanityConfigured) return null
   const { client } = await import('./client')
-  return client.fetch<Consultancy | null>(consultancyQuery, { slug: resolvedSlug }, { cache: 'no-store' }).then((item) => item ?? fallback).catch((error) => {
+  return client.fetch<Consultancy | null>(consultancyQuery, { slug: resolvedSlug }, { cache: 'no-store' }).then((item) => item).catch((error) => {
     console.error(`[Sanity] Failed to load consultancy: ${resolvedSlug}`, error)
-    return fallback
+    return null
   })
 }
