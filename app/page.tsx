@@ -27,9 +27,9 @@ export default async function Home() {
   if (isSanityConfigured) {
     const { client } = await import('@/lib/sanity/client');
     [highlights, consultancies, posts] = await Promise.all([
-      client.fetch(highlightsQuery).catch(() => []),
+      client.fetch(highlightsQuery, {}, { cache: 'no-store' }).catch(() => []),
       getConsultancies(),
-      client.fetch(latestPostsQuery).catch(() => []),
+      client.fetch(latestPostsQuery, {}, { cache: 'no-store' }).catch(() => []),
     ]);
   }
 

@@ -84,7 +84,7 @@ export const consultancyQuery = defineQuery(/* groq */ `
 export async function getConsultancies(): Promise<ConsultancyCard[]> {
   if (!isSanityConfigured) return referenceConsultancies
   const { client } = await import('./client')
-  const cmsItems = await client.fetch<ConsultancyCard[]>(consultanciesQuery).catch(() => [])
+  const cmsItems = await client.fetch<ConsultancyCard[]>(consultanciesQuery, {}, { cache: 'no-store' }).catch(() => [])
   const cmsSlugs = new Set(cmsItems.map(({ slug }) => slug))
   return [...cmsItems, ...referenceConsultancies.filter(({ slug }) => !cmsSlugs.has(slug))]
     .sort((a, b) => Number(b.slug === 'goreto-educational-consultancy') - Number(a.slug === 'goreto-educational-consultancy'))
@@ -95,5 +95,5 @@ export async function getConsultancy(slug: string): Promise<Consultancy | null> 
   const fallback = referenceConsultancies.find((item) => item.slug === resolvedSlug) ?? null
   if (!isSanityConfigured) return fallback
   const { client } = await import('./client')
-  return client.fetch<Consultancy | null>(consultancyQuery, { slug: resolvedSlug }).then((item) => item ?? fallback).catch(() => fallback)
+  return client.fetch<Consultancy | null>(consultancyQuery, { slug: resolvedSlug }, { cache: 'no-store' }).then((item) => item ?? fallback).catch(() => fallback)
 }

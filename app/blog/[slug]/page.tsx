@@ -8,7 +8,7 @@ type Block = { _key: string; _type: string; style?: string; children?: Span[] }
 type Post = { title: string; excerpt?: string; publishedAt?: string; body?: Block[] }
 const slugsQuery = defineQuery(/* groq */ `*[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()]{ "slug": slug.current }`)
 const postQuery = defineQuery(/* groq */ `*[_type == "post" && slug.current == $slug && defined(publishedAt) && publishedAt <= now()][0]{ title, excerpt, publishedAt, body }`)
-async function getPost(slug: string): Promise<Post | null> { if (!isSanityConfigured) return null; const { client } = await import('@/lib/sanity/client'); return client.fetch<Post | null>(postQuery, { slug }).catch(() => null) }
+async function getPost(slug: string): Promise<Post | null> { if (!isSanityConfigured) return null; const { client } = await import('@/lib/sanity/client'); return client.fetch<Post | null>(postQuery, { slug }, { cache: 'no-store' }).catch(() => null) }
 export const dynamicParams = true
 export async function generateStaticParams() { if (!isSanityConfigured) return [{ slug: '__empty' }]; const { client } = await import('@/lib/sanity/client'); const slugs = await client.fetch<{ slug: string }[]>(slugsQuery).catch(() => []); return slugs.length ? slugs : [{ slug: '__empty' }] }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const post = await getPost((await params).slug); return post ? { title: post.title, description: post.excerpt } : {} }

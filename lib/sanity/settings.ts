@@ -27,5 +27,5 @@ export const siteSettingsQuery = defineQuery(/* groq */ `
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings | null> => {
   if (!isSanityConfigured) return null
-  return client.fetch<SiteSettings | null>(siteSettingsQuery).catch(() => null)
+  return client.fetch<SiteSettings | null>(siteSettingsQuery, {}, { cache: 'no-store' }).catch(() => null)
 })

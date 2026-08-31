@@ -53,5 +53,5 @@ export const eventQuery = defineQuery(/* groq */ `
   }
 `)
 
-export async function getUpcomingEvents(): Promise<EventCard[]> { if (!isSanityConfigured) return []; const { client } = await import('./client'); return client.fetch<EventCard[]>(upcomingEventsQuery).catch(() => []) }
-export async function getEvent(slug: string): Promise<Event | null> { if (!isSanityConfigured) return null; const { client } = await import('./client'); return client.fetch<Event | null>(eventQuery, { slug }).catch(() => null) }
+export async function getUpcomingEvents(): Promise<EventCard[]> { if (!isSanityConfigured) return []; const { client } = await import('./client'); return client.fetch<EventCard[]>(upcomingEventsQuery, {}, { cache: 'no-store' }).catch(() => []) }
+export async function getEvent(slug: string): Promise<Event | null> { if (!isSanityConfigured) return null; const { client } = await import('./client'); return client.fetch<Event | null>(eventQuery, { slug }, { cache: 'no-store' }).catch(() => null) }
