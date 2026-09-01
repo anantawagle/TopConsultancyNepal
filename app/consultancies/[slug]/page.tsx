@@ -6,8 +6,7 @@ import { SimplePortableText } from '@/components/content/SimplePortableText'
 import { consultancySlugsQuery, getConsultancy } from '@/lib/sanity/consultancies'
 import { isSanityConfigured } from '@/lib/sanity/config'
 
-export const dynamicParams = true
-export async function generateStaticParams() { if (!isSanityConfigured) return []; const { client } = await import('@/lib/sanity/client'); return client.fetch<{ slug: string }[]>(consultancySlugsQuery, {}, { cache: 'no-store' }).catch(() => []) }
+export const dynamic = 'force-dynamic'
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const item = await getConsultancy((await params).slug); return item ? { title: item.seo?.title || item.name, description: item.seo?.description || item.shortDescription } : {} }
 
 function Chips({ values }: { values?: string[] }) { return values?.length ? <div className="flex flex-wrap gap-2">{values.map((value) => <span key={value} className="rounded-full bg-brand-secondary/10 px-3 py-1.5 text-sm font-semibold text-brand-secondary">{value}</span>)}</div> : <p className="text-text-muted">Not specified.</p> }

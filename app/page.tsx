@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { AnimatedHero } from '@/components/home/AnimatedHero';
 import { BentoGrid } from '@/components/home/BentoGrid';
 import { CTASection } from '@/components/home/CTASection';

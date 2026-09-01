@@ -38,7 +38,7 @@ const guideGroups = [
 ]
 
 const guides = guideGroups.flatMap(([guideType, routePrefix, records]) => records.map((guide) => ({
-  _id: `migration.guide.${guideType}.${guide.slug}`,
+  _id: `migration-guide-${guideType}-${guide.slug}`,
   _type: 'guide',
   guideType,
   name: guide.name,
@@ -53,7 +53,7 @@ const guides = guideGroups.flatMap(([guideType, routePrefix, records]) => record
 })))
 
 const consultancies = referenceConsultancies.map(({ _id: sourceId, slug, ...consultancy }) => ({
-  _id: `migration.consultancy.${slug}`,
+  _id: `migration-consultancy-${slug}`,
   _type: 'consultancy',
   ...consultancy,
   slug: { _type: 'slug', current: slug },
@@ -65,7 +65,7 @@ const consultancies = referenceConsultancies.map(({ _id: sourceId, slug, ...cons
 
 const highlights = [
   {
-    _id: 'migration.homeHighlight.welcome',
+    _id: 'migration-homeHighlight-welcome',
     _type: 'homeHighlight',
     category: 'update',
     title: 'Find the right education consultancy with confidence',
@@ -76,7 +76,7 @@ const highlights = [
     priority: 30,
   },
   {
-    _id: 'migration.homeHighlight.scholarships',
+    _id: 'migration-homeHighlight-scholarships',
     _type: 'homeHighlight',
     category: 'scholarship',
     title: 'Discover opportunities that can fund your studies',
@@ -87,7 +87,7 @@ const highlights = [
     priority: 20,
   },
   {
-    _id: 'migration.homeHighlight.destinations',
+    _id: 'migration-homeHighlight-destinations',
     _type: 'homeHighlight',
     category: 'announcement',
     title: 'Start planning your study-abroad journey',

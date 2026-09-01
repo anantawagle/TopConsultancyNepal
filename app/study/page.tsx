@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next'
 import { GuideIndex } from '@/components/content/GuideIndex'
 import { getGuides } from '@/lib/sanity/guides'
