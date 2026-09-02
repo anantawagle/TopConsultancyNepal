@@ -12,6 +12,7 @@
     "cms:prepare-import": "node migration/scripts/build-current-content-import.mjs"
   },
   "dependencies": {
+    "@portabletext/react": "^8.0.1",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.11.0",
     "clsx": "^2.1.1",
