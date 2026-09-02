@@ -11,7 +11,7 @@ const writeClient = createClient({
 export async function POST(request: Request) {
   try {
     const formData = await request.formData()
-    
+
     // Basic Honeypot to catch bots
     const honeypot = formData.get('bot-field')?.toString()
     if (honeypot) {
@@ -83,7 +83,7 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({
           from: 'Top Consultancy Nepal <onboarding@resend.dev>',
-          to: 'goretotrekmetechnical@gmail.com',
+          to: 'topconsultancynepal@gmail.com',
           subject: `New Enquiry from ${name}`,
           html: emailHtml,
           reply_to: email
