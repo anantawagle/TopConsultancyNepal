@@ -28,6 +28,9 @@ export async function generateMetadata(): Promise<Metadata> {
       icon: "/images/tcn-logo.png",
       apple: "/images/tcn-logo.png",
     },
+    verification: {
+      google: "4ImzCtbGcvL2fXOEescnbhH3tS9HsKMYRh0_Ri1ejiI",
+    },
   };
 }
 
