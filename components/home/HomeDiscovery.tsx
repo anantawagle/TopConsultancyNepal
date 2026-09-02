@@ -11,6 +11,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import type { ConsultancyCard } from "@/lib/sanity/consultancies";
 
 type Post = { _id: string; title: string; slug: string; excerpt?: string };
@@ -160,9 +161,15 @@ export function HomeDiscovery({
                   className="flex min-h-64 flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/5 text-lg font-extrabold text-brand-primary">
-                      {item.name.charAt(0)}
-                    </span>
+                    {item.logo?.url ? (
+                      <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm border border-slate-100">
+                        <Image src={item.logo.url} alt={item.logo.alt || `${item.name} logo`} width={44} height={44} className="h-full w-full object-contain p-1" />
+                      </div>
+                    ) : (
+                      <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-primary/5 text-lg font-extrabold text-brand-primary">
+                        {item.name.charAt(0)}
+                      </span>
+                    )}
                     {item.isVerified && (
                       <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
                         <CheckCircle2 className="h-4 w-4" /> Verified
