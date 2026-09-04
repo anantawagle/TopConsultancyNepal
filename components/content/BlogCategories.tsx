@@ -2,11 +2,11 @@ import Link from 'next/link'
 
 export const BLOG_CATEGORIES = [
   { slug: 'all', label: 'All Blogs', href: '/blog' },
-  { slug: 'australia', label: 'Australia', href: '/blog/category/australia' },
-  { slug: 'canada', label: 'Canada', href: '/blog/category/canada' },
-  { slug: 'uk', label: 'United Kingdom', href: '/blog/category/uk' },
-  { slug: 'usa', label: 'United States', href: '/blog/category/usa' },
-  { slug: 'new-zealand', label: 'New Zealand', href: '/blog/category/new-zealand' }
+  { slug: 'australia', label: 'Australia', href: '/category/australia' },
+  { slug: 'canada', label: 'Canada', href: '/category/canada' },
+  { slug: 'uk', label: 'United Kingdom', href: '/category/uk' },
+  { slug: 'usa', label: 'United States', href: '/category/usa' },
+  { slug: 'new-zealand', label: 'New Zealand', href: '/category/new-zealand' }
 ]
 
 export function BlogCategories({ activeCategory = 'all' }: { activeCategory?: string }) {

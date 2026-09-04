@@ -10,7 +10,15 @@ import type { ConsultancyCard } from '@/lib/sanity/consultancies';
 import type { Highlight } from '@/components/home/AnimatedHero';
 import { isSanityConfigured } from '@/lib/sanity/config';
 
-type HomePost = { _id: string; title: string; slug: string; excerpt?: string };
+type HomePost = { 
+  _id: string; 
+  title: string; 
+  slug: string; 
+  excerpt?: string;
+  publishedAt?: string;
+  mainImage?: { url: string; alt?: string };
+  author?: { name: string; image?: { url: string; alt?: string } };
+};
 
 const highlightsQuery = defineQuery(/* groq */ `*[
   _type == "homeHighlight" && defined(publishedAt) && publishedAt <= now() &&
@@ -19,7 +27,11 @@ const highlightsQuery = defineQuery(/* groq */ `*[
   _id, category, title, summary, link,
   mainImage { "url": asset->url, alt }
 }`);
-const latestPostsQuery = defineQuery(/* groq */ `*[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc, _id asc)[0...3]{ _id, title, "slug": slug.current, excerpt }`);
+const latestPostsQuery = defineQuery(/* groq */ `*[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc, _id asc)[0...3]{ 
+  _id, title, "slug": slug.current, excerpt, publishedAt,
+  "mainImage": mainImage.asset->{ "url": url, "alt": ^.alt },
+  "author": author->{ name, "image": image.asset->{ "url": url, "alt": ^.alt } }
+}`);
 
 export default async function Home() {
   let highlights: Highlight[] = [];

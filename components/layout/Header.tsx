@@ -22,11 +22,11 @@ const links: LinkItem[] = [
     label: 'Blog',
     dropdown: [
       { href: '/blog', label: 'All Blogs' },
-      { href: '/blog/category/australia', label: 'Australia' },
-      { href: '/blog/category/canada', label: 'Canada' },
-      { href: '/blog/category/uk', label: 'United Kingdom' },
-      { href: '/blog/category/usa', label: 'United States' },
-      { href: '/blog/category/new-zealand', label: 'New Zealand' }
+      { href: '/category/australia', label: 'Australia' },
+      { href: '/category/canada', label: 'Canada' },
+      { href: '/category/uk', label: 'United Kingdom' },
+      { href: '/category/usa', label: 'United States' },
+      { href: '/category/new-zealand', label: 'New Zealand' }
     ]
   }, 
   { href: '/scholarships', label: 'Scholarships' },

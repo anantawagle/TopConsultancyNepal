@@ -14,7 +14,16 @@ import Link from "next/link";
 import Image from "next/image";
 import type { ConsultancyCard } from "@/lib/sanity/consultancies";
 
-type Post = { _id: string; title: string; slug: string; excerpt?: string };
+type Post = { 
+  _id: string; 
+  title: string; 
+  slug: string; 
+  excerpt?: string;
+  publishedAt?: string;
+  mainImage?: { url: string; alt?: string };
+  author?: { name: string; image?: { url: string; alt?: string } };
+};
+
 const pathways = [
   {
     title: "Choose a destination",
@@ -276,35 +285,77 @@ export function HomeDiscovery({
                   Read before you decide
                 </h2>
               </div>
-              <Link href="/blog" className="font-bold text-brand-secondary">
+              <Link href="/blog" className="font-bold text-brand-secondary hover:underline">
                 All guides →
               </Link>
             </div>
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
               {posts.map((post) => (
-                <article
-                  key={post._id}
-                  className="rounded-2xl border border-slate-200 p-6"
+                <article 
+                  key={post._id} 
+                  className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-secondary/10 hover:border-brand-secondary/30"
                 >
-                  <h3 className="text-xl font-bold text-brand-primary">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="hover:text-brand-secondary"
-                    >
-                      {post.title}
-                    </Link>
-                  </h3>
-                  {post.excerpt && (
-                    <p className="mt-3 line-clamp-3 leading-7 text-text-muted">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="mt-5 inline-block font-bold text-brand-secondary"
-                  >
-                    Read guide →
-                  </Link>
+                  <div className="flex flex-col h-full">
+                    {post.mainImage?.url && (
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                        <Image 
+                          src={post.mainImage.url} 
+                          alt={post.mainImage.alt || post.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
+                    
+                    <div className="flex flex-col flex-1 p-6">
+                      <div className="flex items-center gap-2 text-sm font-medium text-text-muted mb-3">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[10px]">
+                          📅
+                        </span>
+                        {post.publishedAt ? new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(post.publishedAt)) : 'Study guide'}
+                      </div>
+                      
+                      <h3 className="mb-3 text-xl font-bold text-brand-primary">
+                        <Link href={`/blog/${post.slug}`} className="before:absolute before:inset-0">
+                          {post.title}
+                        </Link>
+                      </h3>
+                      
+                      {post.excerpt && (
+                        <p className="mb-5 line-clamp-3 text-sm leading-relaxed text-text-muted flex-1">
+                          {post.excerpt}
+                        </p>
+                      )}
+                      
+                      <div className="mt-4 flex items-center justify-between pt-4 border-t border-slate-100">
+                        {post.author ? (
+                          <div className="flex items-center gap-2 relative z-20">
+                            {post.author.image?.url ? (
+                              <div className="relative h-8 w-8 overflow-hidden rounded-full border border-slate-200">
+                                <Image
+                                  src={post.author.image.url}
+                                  alt={post.author.image.alt || post.author.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              </div>
+                            ) : (
+                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-500">
+                                {post.author.name.charAt(0)}
+                              </div>
+                            )}
+                            <span className="text-xs font-medium text-text-main">{post.author.name}</span>
+                          </div>
+                        ) : <div />}
+                        
+                        <div className="flex items-center gap-1 text-sm font-semibold text-brand-secondary group-hover:text-brand-primary transition-colors">
+                          Read 
+                          <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
