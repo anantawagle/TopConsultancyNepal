@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Guide } from '@/lib/sanity/queries'
+import type { Guide } from '@/lib/content/guides'
 import { RelatedConsultancies } from './RelatedConsultancies'
 import { RelatedBlogs } from './RelatedBlogs'
 
