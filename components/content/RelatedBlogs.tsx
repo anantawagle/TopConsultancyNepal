@@ -14,7 +14,7 @@ type Post = {
 }
 
 const relatedPostsQuery = defineQuery(/* groq */ `
-  *[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now() && $topic in coalesce(topics, [])]
+  *[_type == "post" && defined(slug.current) && defined(publishedAt) && publishedAt <= now() && slug.current != $excludeSlug && count(coalesce(topics, [])[@ in $topics]) > 0]
     | order(publishedAt desc, _id asc)[0...3] {
       _id, title, "slug": slug.current, excerpt, publishedAt,
       "mainImage": mainImage.asset->{ "url": url, "alt": ^.alt },
@@ -22,14 +22,22 @@ const relatedPostsQuery = defineQuery(/* groq */ `
     }
 `)
 
-async function getPosts(topic: string): Promise<Post[]> {
-  if (!isSanityConfigured) return []
+async function getPosts(topics: string[], excludeSlug?: string): Promise<Post[]> {
+  if (!isSanityConfigured || !topics || topics.length === 0) return []
   const { client } = await import('@/lib/sanity/client')
-  return client.fetch<Post[]>(relatedPostsQuery, { topic }).catch(() => [])
+  return client.fetch<Post[]>(relatedPostsQuery, { topics, excludeSlug: excludeSlug || '' }).catch(() => [])
 }
 
-export async function RelatedBlogs({ topic, title }: { topic: string; title: string }) {
-  const posts = await getPosts(topic)
+export async function RelatedBlogs({ 
+  topics, 
+  title = "Related blogs",
+  excludeSlug 
+}: { 
+  topics: string[]; 
+  title?: string;
+  excludeSlug?: string;
+}) {
+  const posts = await getPosts(topics, excludeSlug)
   
   // If there are no related posts, hide the entire section
   if (posts.length === 0) {
@@ -41,7 +49,7 @@ export async function RelatedBlogs({ topic, title }: { topic: string; title: str
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="mb-2 text-sm font-bold uppercase tracking-widest text-brand-secondary">From our blog</p>
-          <h2 id="related-guides" className="text-3xl font-bold text-brand-primary">Guides related to {title}</h2>
+          <h2 id="related-guides" className="text-3xl font-bold text-brand-primary">{title}</h2>
         </div>
         <Link href="/blog" className="font-semibold text-brand-secondary hover:underline">View all guides →</Link>
       </div>
