@@ -33,7 +33,8 @@ export default defineType({
     defineField({ name: 'contactEmail', title: 'Public email', type: 'string', group: 'contact', validation: (rule) => rule.email() }),
     defineField({ name: 'contactPhone', title: 'Primary phone', type: 'string', group: 'contact', validation: (rule) => rule.max(30) }),
     defineField({ name: 'address', title: 'Head office address', type: 'string', group: 'contact', validation: (rule) => rule.required() }),
-    defineField({ name: 'city', title: 'City', type: 'string', group: 'contact', options: { list: ['Kathmandu', 'Lalitpur', 'Bhaktapur', 'Pokhara', 'Chitwan', 'Butwal', 'Biratnagar', 'Dharan', 'Itahari'] }, validation: (rule) => rule.required() }),
+    defineField({ name: 'location', title: 'Location', type: 'reference', group: 'contact', to: [{ type: 'guide' }], options: { filter: 'guideType == "location"' }, description: 'Select a location created in the Guides section.', validation: (rule) => rule.required() }),
+    defineField({ name: 'city', title: 'City (Legacy)', type: 'string', group: 'contact', hidden: true }),
     defineField({ name: 'website', title: 'Website', type: 'url', group: 'contact', validation: (rule) => rule.uri({ scheme: ['http', 'https'] }) }),
     defineField({ name: 'googleMapsUrl', title: 'Google Maps link', type: 'url', group: 'contact', validation: (rule) => rule.uri({ scheme: ['http', 'https'] }) }),
     defineField({ name: 'branches', title: 'Additional branches', type: 'array', group: 'contact', of: [defineArrayMember({ type: 'object', name: 'branch', fields: [defineField({ name: 'name', title: 'Branch name', type: 'string', validation: (rule) => rule.required() }), defineField({ name: 'address', title: 'Address', type: 'string', validation: (rule) => rule.required() }), defineField({ name: 'phone', title: 'Phone', type: 'string' }), defineField({ name: 'email', title: 'Email', type: 'string', validation: (rule) => rule.email() })], preview: { select: { title: 'name', subtitle: 'address' } } })] }),
@@ -50,5 +51,5 @@ export default defineType({
     defineField({ name: 'sourceId', title: 'Migration source ID', type: 'string', group: 'migration', readOnly: true }),
   ],
   orderings: [{ title: 'Featured first', name: 'featuredFirst', by: [{ field: 'featuredRank', direction: 'asc' }, { field: 'name', direction: 'asc' }] }],
-  preview: { select: { title: 'name', city: 'city', media: 'logo', verified: 'isVerified', status: 'listingStatus' }, prepare({ title, city, media, verified, status }) { return { title, media, subtitle: [city, verified ? 'Verified' : undefined, status === 'hidden' ? 'Hidden' : undefined].filter(Boolean).join(' · ') } } },
+  preview: { select: { title: 'name', locationName: 'location.name', legacyCity: 'city', media: 'logo', verified: 'isVerified', status: 'listingStatus' }, prepare({ title, locationName, legacyCity, media, verified, status }) { return { title, media, subtitle: [locationName || legacyCity, verified ? 'Verified' : undefined, status === 'hidden' ? 'Hidden' : undefined].filter(Boolean).join(' · ') } } },
 })
